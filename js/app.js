@@ -15,46 +15,79 @@ let textSearchQuery = ''; // 实时文本搜索查询
 let previousActiveKeywords = null; // 文本搜索激活时，暂存之前的关键词激活集合
 let previousActiveAuthors = null; // 文本搜索激活时，暂存之前的作者激活集合
 
+/** 从 URL 查询串解析逗号分隔列表（支持 encodeURIComponent 分项编码） */
+function parseCommaSeparatedUrlParam(raw) {
+  if (raw == null || !String(raw).trim()) {
+    return null;
+  }
+  const parts = String(raw).split(',').map((s) => {
+    const t = s.trim();
+    if (!t) {
+      return '';
+    }
+    try {
+      return decodeURIComponent(t);
+    } catch {
+      return t;
+    }
+  }).filter(Boolean);
+  return parts.length > 0 ? parts : null;
+}
+
 // 加载用户的关键词设置
 function loadUserKeywords() {
-  const savedKeywords = localStorage.getItem('preferredKeywords');
-  if (savedKeywords) {
-    try {
-      userKeywords = JSON.parse(savedKeywords);
-      // 默认激活所有关键词
-      activeKeywords = [...userKeywords];
-    } catch (error) {
-      console.error('解析关键词失败:', error);
+  const params = new URLSearchParams(window.location.search);
+  const fromUrl = parseCommaSeparatedUrlParam(params.get('keywords') || params.get('kw'));
+  if (fromUrl) {
+    userKeywords = fromUrl;
+    activeKeywords = [...userKeywords];
+  } else {
+    const savedKeywords = localStorage.getItem('preferredKeywords');
+    if (savedKeywords) {
+      try {
+        userKeywords = JSON.parse(savedKeywords);
+        // 默认激活所有关键词
+        activeKeywords = [...userKeywords];
+      } catch (error) {
+        console.error('解析关键词失败:', error);
+        userKeywords = [];
+        activeKeywords = [];
+      }
+    } else {
       userKeywords = [];
       activeKeywords = [];
     }
-  } else {
-    userKeywords = [];
-    activeKeywords = [];
   }
-  
+
   // renderKeywordTags();
   renderFilterTags();
 }
 
 // 加载用户的作者设置
 function loadUserAuthors() {
-  const savedAuthors = localStorage.getItem('preferredAuthors');
-  if (savedAuthors) {
-    try {
-      userAuthors = JSON.parse(savedAuthors);
-      // 默认激活所有作者
-      activeAuthors = [...userAuthors];
-    } catch (error) {
-      console.error('解析作者失败:', error);
+  const params = new URLSearchParams(window.location.search);
+  const fromUrl = parseCommaSeparatedUrlParam(params.get('authors') || params.get('author'));
+  if (fromUrl) {
+    userAuthors = fromUrl;
+    activeAuthors = [...userAuthors];
+  } else {
+    const savedAuthors = localStorage.getItem('preferredAuthors');
+    if (savedAuthors) {
+      try {
+        userAuthors = JSON.parse(savedAuthors);
+        // 默认激活所有作者
+        activeAuthors = [...userAuthors];
+      } catch (error) {
+        console.error('解析作者失败:', error);
+        userAuthors = [];
+        activeAuthors = [];
+      }
+    } else {
       userAuthors = [];
       activeAuthors = [];
     }
-  } else {
-    userAuthors = [];
-    activeAuthors = [];
   }
-  
+
   renderFilterTags();
 }
 
