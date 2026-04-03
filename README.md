@@ -28,8 +28,10 @@ This innovative tool transforms how you stay updated with arXiv papers by combin
 
 👉 **[Try it now!] https://ericzylu.github.io/daily-arXiv-ai-enhanced/** - No installation required
 
-If you want search for keyworlds, use **https://ericzylu.github.io/daily-arXiv-ai-enhanced/?keywords=ai,llm**, where **ai** and **llm** is your keyworlds.
+If you want search for keyworlds or authors:
 
+- use **https://ericzylu.github.io/daily-arXiv-ai-enhanced/?keywords=ai,llm**, where **ai** and **llm** is your keyworlds.
+- use **https://ericzylu.github.io/daily-arXiv-ai-enhanced/?authors=Hinton**, where **Hinton** is search author.
 
 https://github.com/user-attachments/assets/b25712a4-fb8d-484f-863d-e8da6922f9d7
 
@@ -128,10 +130,3 @@ We sincerely thank the following individuals and organizations for their promoti
   </tbody>
 </table>
 
-
-# Star history
-
-[![Stargazers over time](https://starchart.cc/ericzylu/daily-arXiv-ai-enhanced.svg?variant=adaptive)](https://starchart.cc/Ericzylu/daily-arXiv-ai-enhanced)
-
-# Buy me a coffee
-[here](./buy-me-a-coffee/README.md)
